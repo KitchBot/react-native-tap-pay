@@ -1,41 +1,56 @@
 
 #import "TapPay.h"
 
-
-
-
 @implementation TapPay
 
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
 }
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE()
 
 
-
-+ (void) setWithCardNumber:(NSString *_Nonnull)cardNumber{
-    [TPDCard setWithCardNumber:@"消費者卡片號碼"
-                  withDueMonth:@"消費者卡片過期月份"
-                   withDueYear:@"消費者卡片過期年份"
-                       withCCV:@"消費者卡片驗證代碼"];
-
+RCT_EXPORT_METHOD(setup:(int)appID WithAPPKey:(NSString * _Nonnull)appKey WithDev:(bool)dev)
+{
+    if(dev){
+        [TPDSetup setWithAppId:appID withAppKey:appKey withServerType:TPDServer_SandBox];
+    }else{
+        [TPDSetup setWithAppId:appID withAppKey:appKey withServerType:TPDServer_Production];
+    }
 }
-- (void)createTokenWithGeoLocation:(NSString * _Nonnull)geoLocation{
 
-    [[[[TPDCard setWithCardNumber:@"消費者卡片號碼"
-                     withDueMonth:@"消費者卡片過期月份"
-                      withDueYear:@"消費者卡片過期年份"
-                          withCCV:@"消費者卡片驗證代碼"]
-       onSuccessCallback:^(NSString * _Nullable prime, NSString * _Nullable lastFour) {
-           
+RCT_EXPORT_METHOD(createToken:(NSString *_Nonnull)cardNumber
+                  withDueMonth:(NSString * _Nonnull)dueMonth
+                  withDueYear:(NSString * _Nonnull)dueYear
+                  withCCV:(NSString * _Nonnull)CCV)
+                  withLocation:(NSString * _Nonnull)geoLocation
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject
+{
+    [TPDCard setWithCardNumber:cardNumber
+                  withDueMonth:dueMonth
+                   withDueYear:dueYear
+                       withCCV:CCV];
+    
+    [[[[TPDCard setWithCardNumber:cardNumber
+                     withDueMonth:dueMonth
+                      withDueYear:dueYear
+                          withCCV:CCV]
+       onSuccessCallback:^(NSString * _Nullable token, NSString * _Nullable cardLastFour) {
+           NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 token, @"token", cardLastFour, @"cardLastFour", nil];
+           resolve(dict);
+
        }]
       onFailureCallback:^(NSInteger status, NSString * _Nonnull message) {
-          
+          NSError *error = [NSError errorWithDomain:@"tappay" code:status userInfo:nil];
+          NSString* code = [@(status) stringValue];
+          reject(code,message,error);
       }]
-     createTokenWithGeoLocation:@"消費者所在地點的經緯度"];
+     
+     createTokenWithGeoLocation:geoLocation];
+    
 }
-
 
 @end
   

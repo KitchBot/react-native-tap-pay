@@ -9,7 +9,5 @@
 
 @interface TapPay : NSObject <RCTBridgeModule>
 
-+(void)setWithCardNumber:(NSString *_Nonnull)cardNumber;
-+(void)createTokenWithGeoLocation:(NSString * _Nonnull)geoLocation;
 @end
   
