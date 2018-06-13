@@ -15,7 +15,10 @@
 @property (nonatomic, assign) PKShippingType shippingType NS_AVAILABLE_IOS(8_3);
 
 // Shipping method chosen by the consumer. Default will be the first shipping-methods.
-@property (nonatomic, strong) PKShippingMethod *shippingMethod;
+@property (nonatomic, strong) PKShippingMethod * shippingMethod;
+
+// Get toatal amount
+@property (nonatomic, strong, nullable) NSDecimalNumber *totalAmount;
 
 /**
  Add New TPDPaymentItem.

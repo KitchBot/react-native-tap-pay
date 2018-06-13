@@ -24,5 +24,8 @@
 // The default is PKAddressFieldNone.
 @property (nonatomic, assign) PKAddressField requiredShippingAddressFields;
 
+// Get client IP
+@property (nonatomic ,strong, nullable) NSString *clientIP;
+
 
 @end

@@ -1,13 +1,18 @@
 
 #if __has_include("RCTBridgeModule.h")
 #import "RCTBridgeModule.h"
+#import "RCTEventEmitter.h"
 #else
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
+
 #endif
-#import <TPDirect/TPDSetup.h>
-#import <TPDirect/TPDCard.h>
+#import <TPDirect/TPDirect.h>
+#import <RCTConvert.h>
 
-@interface TapPay : NSObject <RCTBridgeModule>
 
+
+@interface TapPay : RCTEventEmitter
+    
 @end
   

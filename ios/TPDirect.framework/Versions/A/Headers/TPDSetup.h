@@ -52,4 +52,28 @@ typedef NS_ENUM(NSInteger, TPDServerType) {
 + (NSString *_Nonnull)version;
 
 
+/**
+ Please setup Advertising Identifier, to improve the accuracy of fraud detect.
+
+ @param IDFA NSString, Advertising Identifier.
+ */
+-(void)setupIDFA:(NSString *_Nullable)IDFA;
+
+
+/**
+ This Method Will Sync to TapPay Server.
+ 
+ You need to implement this function in AppDelegate.
+ */
+- (void)serverSync;
+
+/**
+ Call this method to get Fraud Id.
+ 
+ Pass Fraud Id To Your Server , Use Pay By Token API To Complete transaction.
+ 
+ @return FraudID
+ */
+- (NSString *)getFraudID;
+
 @end

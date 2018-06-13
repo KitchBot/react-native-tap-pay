@@ -9,12 +9,6 @@
 
 @interface TPDTransactionResult : NSObject
 
-// orderID, An Identifier Specific For This Transaction. Save This Value For Refund Purposes.
-@property (nonatomic, strong) NSString *orderID;
-
-// authCode, Credit Card Transaction Authorization Code From The Bank.
-@property (nonatomic, strong) NSString *authCode;
-
 // message, Report Message.
 @property (nonatomic, strong) NSString *message;
 

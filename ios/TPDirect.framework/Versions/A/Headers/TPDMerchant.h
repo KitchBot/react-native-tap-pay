@@ -9,6 +9,9 @@
 
 @interface TPDMerchant : NSObject
 
+// This Will Shown on payment sheet
+@property (nonatomic, strong) NSString *merchantName;
+
 // The payment processing capabilities of the merchant.
 @property (nonatomic, assign) PKMerchantCapability merchantCapability;
 
